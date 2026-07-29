@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Events\FlagsEvaluated;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,6 +14,8 @@ class FeatureFlagController extends Controller
         $environment = $request->user();
 
         $flags = $environment->featureFlags()->pluck('is_enabled', 'key');
+
+        FlagsEvaluated::dispatch($environment);
 
         return response()->json([
             'environment' => $environment->name,
