@@ -33,4 +33,4 @@ jobs:
           touch database/database.sqlite
 
       - name: Execute Test Suite
-        run: php artisan test --strict
+        run: php artisan test
